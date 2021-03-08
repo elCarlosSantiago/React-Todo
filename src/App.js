@@ -9,14 +9,18 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: [
-        {
-          task: 'Style Todo',
-          id: 1234,
-          completed: false,
-        },
-      ],
+      todos: JSON.parse(window.localStorage.getItem('todos')) || [],
     };
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('todos') === null) {
+      localStorage.setItem('todos', JSON.stringify([]));
+    }
+  }
+
+  componentDidUpdate() {
+    window.localStorage.setItem('todos', JSON.stringify(this.state.todos));
   }
 
   addTodo = (todoTask) => {
